@@ -4,7 +4,48 @@ Authors: Murali Haran, Bokgyeong Kang, and Jaewoo Park
 We provide instructions for implementing some algorithms for models with intractable normalizing functions and testing the quality of samples. 
 
 
-## An exponential random graph model (ERGM)
+## 1. A Potts model
+Before running any code, ensure the required R packages have been installed. Set the R working directory to `/potts`.
+
+### Required packages
+The code has been tested with R version 4.2.2, "Innocent and Trusting."  The following R packages must be installed before the code will run successfully:
+
+- `Rcpp`
+- `RcppArmadillo`
+- `qrng`
+- `foreach`
+- `coda`
+- `batchmeans`
+- `tidyverse`
+- `potts`
+- `DiceKriging`
+- `DiceDesign`
+- `fields`
+
+
+### Simulate data
+`/potts/data.R`
+
+- Simulate a 30 by 30 dataset
+- All components are saved in `/potts/data/`
+
+
+### Run DMH, ABC-MCMC, and LikEm algorithms
+`/potts/postSamp_dmh.R` `/potts/postSamp_abcmcmc.R` `/potts/postSamp_likem.R`
+
+- Generate posterior samples for model parameters using the algorithms 
+- Posterior samples are saved in `/potts/postSamp/`
+
+
+### Testing quality of samples
+
+- `aux.R`: Sample a number of particles over a parameter space and generate auxiliary variables for each particle. The auxiliary variables are saved in `\potts\aux\`
+- `appx_dmh.R` `appx_abcmcmc.R` `appx_likem.R`: Approximate the posterior's score function $u(\theta)$ and the half-vectorization of the sum of sensitivity and variability matrices $d(\theta) = vech[J(\theta) + H(\theta)]$ for each posterior sample. The approximations are saved in `\potts\appx\`
+- `acd_dmh.R` `acd_abcmcmc.R` `acd_likem.R`: Compute an approximate curvature diagnostic (ACD) for each posterior sample path. The diagnostic values are saved in `\potts\acd\`
+
+
+
+## 2. An exponential random graph model (ERGM)
 Before running any code, ensure the required R packages have been installed. Set the R working directory to `/ergm`.
 
 ### Required packages
