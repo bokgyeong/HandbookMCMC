@@ -4,65 +4,50 @@ Authors: Murali Haran, Bokgyeong Kang, and Jaewoo Park
 We provide instructions for implementing some algorithms for models with intractable normalizing functions and testing the quality of samples. 
 
 
-## Required packages:
+## An exponential random graph model (ERGM)
+Before running any code, ensure the required R packages have been installed. Set the R working directory to `/ergm`.
+
+### Required packages
 The code has been tested with R version 4.2.2, "Innocent and Trusting."  The following R packages must be installed before the code will run successfully:
 
 - `Rcpp`
 - `RcppArmadillo`
-- `sitmo`
-- `akima`
-- `mpcmp`
 - `qrng`
-- `ngspatial`
 - `foreach`
 - `coda`
 - `batchmeans`
 - `tidyverse`
+- `ergm`
+- `fields`
+- `Bergm`
+- `Matrix`
+- `rlist`
+- `MASS`
+- `spatstat`
+- `statmod`
 
-The `mpcmp` can be installed from [GitHub](https://github.com/thomas-fung/mpcmp):
+The `Bergm` works with versions 3.7.1 and 3.8.0 of `ergm` which can be installed as follows:
 ```s
 require(devtools)
-devtools::install_github("thomas-fung/mpcmp")
+install_version("ergm", version = "3.8.0", repos = "http://cran.us.r-project.org")
 ```
 
-## Spatial mean-COMP regression model
-Before running any code, ensure the required R packages have been installed. Set the R working directory to `/scomp`.
+### Load data
+`/ergm/data.R`
 
-### Pre-computation for spline approximation
-`/scomp/appx.R`
-- Generate a number of particles over $\Psi = [\log(0.01), \log(\mu_{\max})] \times [0.01, \nu_{\max}]$ and find $\lambda(\mu, \nu)$ for each particle using the Newtwon-Raphson algorithm
-- This step corresponds to Section 3.1 of the manuscript
-- All components are saved in the file `/scomp/appx/set.RData`
-
-### Simulate data
-`/scomp/data.R`
-- Generate data from the spatial mean-COMP regression model
-- All components are saved in the file `/scomp/data/sim.RData`
-
-### Fit the model and summarize the results
-`/scomp/fitCOMP.R`
-- Fit the spatial mean-COMP regression model to the simulated dataset
-- Posterior samples are saved in the file `/scomp/fit/simCOMP.RData`
-- Obtain summary statistics for model parameters
+- Load the Florentine marriage dataset (Breiger and Pattison, 1986)
+- All components are saved in `/ergm/data/`
 
 
-## Spatial mean-ZICOMP regression model
-Before running any code, ensure the required R packages have been installed. Set the R working directory to `/szicomp`.
+### Run ALR, DMH, ABC-MCMC, and VI algorithms
+`/ergm/postSamp_alr.R` `/ergm/postSamp_dmh.R` `/ergm/postSamp_abcmcmc.R` `/ergm/postSamp_vi.R`
 
-### Pre-computation for spline approximation
-`/szicomp/appx.R`
-- Generate a number of particles over $\Psi = [\log(0.01), \log(\mu_{\max})] \times [0.01, \nu_{\max}]$ and find $\lambda(\mu, \nu)$ for each particle using the Newtwon-Raphson algorithm
-- This step corresponds to Section 3.1 of the manuscript
-- All components are saved in the file `/szicomp/appx/set.RData`
+- Generate posterior samples for model parameters using the algorithms 
+- Posterior samples are saved in `/ergm/postSamp/`
 
-### Simulate data
-`/szicomp/data.R`
-- Generate data from the spatial mean-COMP regression model
-- All components are saved in the file `/szicomp/data/sim.RData`
 
-### Fit the model and summarize the results
-`/szicomp/fitZICOMP.R`
-- Fit the spatial mean-ZICOMP regression model to the simulated dataset
-- Posterior samples are saved in the file `/szicomp/fit/simZICOMP.RData`
-- Obtain summary statistics for model parameters
+### Testing quality of samples
 
+- `aux.R`: Sample a number of particles over a parameter space and generate auxiliary variables for each particle. The auxiliary variables are saved in `\ergm\aux\`
+- `appx_alr.R` `appx_dmh.R` `appx_abcmcmc.R` `appx_vi.R`: Approximate the posterior's score function $u(\theta)$ and the half-vectorization of the sum of sensitivity and variability matrices $d(\theta) = vech[J(\theta) + H(\theta)]$ for each posterior sample. The approximations are saved in `\ergm\appx\`
+- `acd_alr.R` `acd_dmh.R` `acd_abcmcmc.R` `acd_vi.R`: Compute an approximate curvature diagnostic (ACD) for each posterior sample path. The diagnostic values are saved in `\ergm\acd\`
