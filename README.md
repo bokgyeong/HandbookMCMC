@@ -1,4 +1,4 @@
-# Code for "Algorithms for Models with Intractable Normalizing Functions" in Handbook of Markov Chain Monte Carlo
+# Supplemental code for "Algorithms for Models with Intractable Normalizing Functions" in Handbook of Markov Chain Monte Carlo
 Authors: Murali Haran, Bokgyeong Kang, and Jaewoo Park
 
 We provide instructions for implementing some algorithms for models with intractable normalizing functions and testing the quality of samples. 
@@ -37,7 +37,7 @@ The code has been tested with R version 4.2.2, "Innocent and Trusting."  The fol
 - Posterior samples are saved in `/potts/postSamp/`
 
 
-### Testing quality of samples
+### Test the quality of samples
 
 - `aux.R`: Sample a number of particles over a parameter space and generate auxiliary variables for each particle. The auxiliary variables are saved in `\potts\aux\`
 - `appx_dmh.R` `appx_abcmcmc.R` `appx_likem.R`: Approximate the posterior's score function $u(\theta)$ and the half-vectorization of the sum of sensitivity and variability matrices $d(\theta) = vech[J(\theta) + H(\theta)]$ for each posterior sample. The approximations are saved in `\potts\appx\`
@@ -87,7 +87,7 @@ install_version("ergm", version = "3.8.0", repos = "http://cran.us.r-project.org
 - Posterior samples are saved in `/ergm/postSamp/`
 
 
-### Testing quality of samples
+### Test the quality of samples
 
 - `aux.R`: Sample a number of particles over a parameter space and generate auxiliary variables for each particle. The auxiliary variables are saved in `\ergm\aux\`
 - `appx_alr.R` `appx_dmh.R` `appx_abcmcmc.R` `appx_vi.R`: Approximate the posterior's score function $u(\theta)$ and the half-vectorization of the sum of sensitivity and variability matrices $d(\theta) = vech[J(\theta) + H(\theta)]$ for each posterior sample. The approximations are saved in `\ergm\appx\`
