@@ -5,6 +5,6 @@
 **/*.Ruserdata
 **/*.html
 
-potts/
+**/fig/
+**/sum.R
   
-.Rproj.user
